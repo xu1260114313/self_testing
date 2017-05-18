@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			#list{
+				border: 1px solid red;
+				margin-bottom: 20px;
+			}
+			#list li{
+				height: 30px;
+				line-height: 30px;
+			}
+			#btn{
+				width: 200px;
+				height: 50px;
+				line-height: 50px;
+				color: #fff;
+				background: #000000;
+				text-align: center;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			
+			随机创建[1-10]以内的value值不相等的10个按钮，按下键盘Enter键，让10个随机按钮按照value值顺序排列，点击每个按钮的时候，弹出它的value值（原生js写）；
+			
+		-->
+		<div id="list"></div>
+		<div id="btn">点我随机排序</div>
+		<script type="text/javascript">
+			var list = document.getElementById("list");
+			var aLi = list.children;
+			var btn = document.getElementById("btn");
+			var btnValue = [0,1,2,3,4,5,6,7,8,9];//按钮的value值
+			var random = btnValue.sort(function(){return  Math.random()-0.5;})
+			for(var i = 0;i < 10;i++){
+				var createEl = document.createElement("li");//创建10个按钮
+				createEl.value = btnValue[i];
+				createEl.innerHTML = btnValue[i];
+				list.appendChild(createEl);
+				//点击当前li，弹出当前li的索引值；
+				aLi[i].index = i;
+				aLi[i].onclick = function(){
+					alert(this.value);
+				};
+			};
+			//键盘事件，keyCode值为13，表示按下Enter键；
+			document.onkeydown = function (e){
+				var e = e || window.event;
+				if(e.keyCode === 13){
+					btnValue.sort(function(a,b){return a-b});
+					for(var i = 0;i < aLi.length;i++){
+						aLi[i].value = btnValue[i];
+						aLi[i].innerHTML = btnValue[i];
+					};
+				}
+			}
+			btn.onclick = function (){
+				btnValue.sort(function(){return Math.random()-0.5});
+				for(var i = 0;i < aLi.length;i++){
+					aLi[i].value = btnValue[i];
+					aLi[i].innerHTML = btnValue[i];
+				};
+			};
+		</script>
+	</body>
+</html>
